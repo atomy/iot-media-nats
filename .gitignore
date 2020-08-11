@@ -4,3 +4,7 @@ vendor/
 composer.lock
 /logs/*
 docker-compose.override.yml
+.vscode/
+/coverage/
+/vendor/
+.phpunit.result.cache
