@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -e
+
+docker run --rm -v $(pwd):/proj -eUID=`id -u` -eGID=`id -g` busybox sh -c 'chown -R ${UID}:${GID} /proj'
+
+rm -rf composer.lock
+rm -rf vendor/
+
+docker run --rm -v $(pwd):/proj busybox sh -c 'chmod -R 777 /proj/logs'
+
+docker build -f scripts/docker/php/Dockerfile -t atomy/iot-media-api-php .
+docker build -f scripts/docker/nginx/Dockerfile -t atomy/iot-media-api-nginx .
+
+docker run -v $(pwd):/var/www -w /var/www atomy/iot-media-api-php php composer.phar install
+
+# rebuild container, since files changed
+docker build -f scripts/docker/php/Dockerfile -t atomy/iot-media-api-php .
+
+docker tag atomy/iot-media-api-nginx:latest xxxx.dkr.ecr.eu-central-1.amazonaws.com/atomy/iot-media-api-nginx:latest
+docker tag atomy/iot-media-api-php:latest xxxx.dkr.ecr.eu-central-1.amazonaws.com/atomy/iot-media-api-php:latest
