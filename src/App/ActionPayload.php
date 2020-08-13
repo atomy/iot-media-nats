@@ -34,7 +34,7 @@ class ActionPayload implements JsonSerializable
     ) {
         $this->statusCode = $statusCode;
         $this->data = $data;
-        $this->error = $error;
+        $this->error = [$error];
     }
 
     /**

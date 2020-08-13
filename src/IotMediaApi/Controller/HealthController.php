@@ -9,34 +9,20 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
- * Class HealthController
+ * Class HealthController, serving GET /health requests.
  *
  * @package App
  */
 class HealthController
 {
     /**
-     * @var Container
-     */
-    private $container;
-
-    /**
-     * ButtonController constructor.
-     *
-     * @param Container $container
-     */
-//    public function __construct(Container $container)
-//    {
-//        $this->container = $container;
-//    }
-
-    /**
-     * Serving GET /button.
+     * Serving GET /health.
      *
      * @param Request $request
      * @param Response $response
      * @param array $args
      * @return Response
+     * @throws \JsonException
      */
     public function get(Request $request, Response $response, array $args)
     {

@@ -16,4 +16,9 @@ return function (App $app) {
         $response = (new \IotMediaApi\Controller\HealthController($app->getContainer()->get(\App\Container::class)))->get($request, $response, []);
         return $response->withHeader('Content-Type', 'application/json');
     });
+
+    $app->post('/event', function (Request $request, Response $response) use ($app) {
+        $response = (new \IotMediaApi\Controller\EventController($app->getContainer()->get(\App\Container::class)))->postEvent($request, $response, []);
+        return $response->withHeader('Content-Type', 'application/json');
+    });
 };

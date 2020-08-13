@@ -17,5 +17,9 @@ docker run -v $(pwd):/var/www -w /var/www atomy/iot-media-api-php php composer.p
 # rebuild container, since files changed
 docker build -f scripts/docker/php/Dockerfile -t atomy/iot-media-api-php .
 
+docker build -f scripts/docker/nats/Dockerfile -t atomy/iot-media-api-nats .
+
 docker tag atomy/iot-media-api-nginx:latest xxxx.dkr.ecr.eu-central-1.amazonaws.com/atomy/iot-media-api-nginx:latest
 docker tag atomy/iot-media-api-php:latest xxxx.dkr.ecr.eu-central-1.amazonaws.com/atomy/iot-media-api-php:latest
+docker tag atomy/iot-media-api-nats:latest xxxx.dkr.ecr.eu-central-1.amazonaws.com/atomy/iot-media-api-nats:latest
+

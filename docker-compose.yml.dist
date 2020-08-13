@@ -2,10 +2,13 @@ version: "2.3"
 
 services:
   iot-media-api-php:
-    image: xxxx.dkr.ecr.eu-central-1.amazonaws.com/atomy/iot-media-api-php:latest
+    image: xxx.dkr.ecr.eu-central-1.amazonaws.com/atomy/iot-media-api-php:latest
     volumes:
       - .:/var/www/
       - php-sock:/sock
+    environment:
+      - NATS_HOST=iot-media-api-nats
+      - NATS_PORT=4222
 
   iot-media-api-nginx:
     image: xxx.dkr.ecr.eu-central-1.amazonaws.com/atomy/iot-media-api-nginx:latest
@@ -17,6 +20,12 @@ services:
       - 8005:80
     depends_on:
       - iot-media-api-php
+
+  iot-media-api-nats:
+    image: xxx.dkr.ecr.eu-central-1.amazonaws.com/atomy/iot-media-api-nats:latest
+    ports:
+      - 4222:4222
+      - 8222:8222
 
 volumes:
   php-sock:
