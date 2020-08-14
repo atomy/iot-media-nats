@@ -20,6 +20,11 @@ services:
       - 8005:80
     depends_on:
       - iot-media-api-php
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=lifelog"
+      - "traefik.frontend.rule=Host:iot-bleh.google.com"
+      - "traefik.docker.network=web"
 
   iot-media-api-nats:
     image: xxx.dkr.ecr.eu-central-1.amazonaws.com/atomy/iot-media-api-nats:latest
@@ -29,3 +34,8 @@ services:
 
 volumes:
   php-sock:
+
+networks:
+  web:
+    external:
+      name: web
