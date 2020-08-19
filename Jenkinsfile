@@ -16,18 +16,18 @@ pipeline {
                         sh './scripts/configure.sh'
                         echo 'Configuring...DONE'
                 }
-            }
 
-            sshagent (credentials: ['github-iogames-jenkins']) {
-                echo 'Auto-tagging...'
-                sh './scripts/auto-tag.sh'
-                echo 'Auto-tagging...DONE'
-                //sh 'ssh -o StrictHostKeyChecking=no -l cloudbees 192.168.1.106 uname -a'
-            }
+                sshagent (credentials: ['github-iogames-jenkins']) {
+                    echo 'Auto-tagging...'
+                    sh './scripts/auto-tag.sh'
+                    echo 'Auto-tagging...DONE'
+                    //sh 'ssh -o StrictHostKeyChecking=no -l cloudbees 192.168.1.106 uname -a'
+                }
 
-            echo 'Building...'
-            sh './scripts/build.sh'
-            echo 'Building...DONE'
+                echo 'Building...'
+                sh './scripts/build.sh'
+                echo 'Building...DONE'
+            }
         }
 
         stage('Push ECR') {
