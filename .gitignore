@@ -9,3 +9,4 @@ docker-compose.prod.yml
 /coverage/
 /vendor/
 .phpunit.result.cache
+current_version
