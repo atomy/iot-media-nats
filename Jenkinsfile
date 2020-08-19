@@ -4,8 +4,18 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+              withCredentials([string(credentialsId: 'iot-media-api-deploy-host', variable: 'DEPLOY_HOST'),
+                string(credentialsId: 'iot-media-api-deploy-login', variable: 'DEPLOY_LOGIN'),
+                string(credentialsId: 'iot-media-api-ecr-prefix', variable: 'ECR_PREFIX'),
+                string(credentialsId: 'iot-media-api-nats-host', variable: 'NATS_HOST')]) {
+                echo 'Configuring...'
+                sh './scripts/configure.sh'
+                echo 'Configuring...DONE'
+              }
+
                 echo 'Building...'
                 sh './scripts/build.sh'
+                echo 'Building...DONE'
             }
         }
 
@@ -18,6 +28,7 @@ pipeline {
 
                     echo 'Pushing ECR...'
                     sh './scripts/push.sh'
+                    echo 'Pushing ECR...DONE'
                 }
             }
         }
@@ -28,6 +39,7 @@ pipeline {
                 sshagent(credentials : ['deploy-key-docker02']) {
                     sh './scripts/deploy.sh'
                 }
+                echo 'Deploying....DONE'
             }
         }
     }

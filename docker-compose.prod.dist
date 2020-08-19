@@ -7,7 +7,7 @@ services:
       - .:/var/www/
       - php-sock:/sock
     environment:
-      - NATS_HOST=iot-media-api-nats
+      - NATS_HOST=nats.prod.google.com
       - NATS_PORT=4222
 
   iot-media-api-nginx:
@@ -16,16 +16,13 @@ services:
       - .:/var/www/
       - ./scripts/docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
       - php-sock:/sock
-    ports:
-      - 8005:80
     depends_on:
       - iot-media-api-php
-
-  iot-media-api-nats:
-    image: xxxx.dkr.ecr.eu-central-1.amazonaws.com/atomy/iot-media-api-nats:latest
-    ports:
-      - 4222:4222
-      - 8222:8222
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=iot-media-api-prod"
+      - "traefik.frontend.rule=Host:stuff.prod.google.com"
+      - "traefik.docker.network=web"
 
 volumes:
   php-sock:
