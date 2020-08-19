@@ -26,7 +26,7 @@ then
     ${DISCORD_WEBHOOK_URL}
 else
   CHANGES=`git log ${CURRENT_VERSION}..${NEW_VERSION} | sort | uniq`
-  CHANGES=`echo ${CHANGES} | sed 's/\n/\n/'`
+  CHANGES=`echo ${CHANGES} | sed ':a;N;$!ba;s/\n/\\n/g'`
 
   curl -X POST \
     -H "Content-Type: application/json" \
