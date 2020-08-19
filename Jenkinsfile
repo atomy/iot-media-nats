@@ -49,7 +49,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh './scripts/save-current-live.sh'
+                sh './scripts/save-current-live-version.sh'
 
                 echo 'Deploying....'
                 sshagent(credentials : ['deploy-key-docker02']) {
