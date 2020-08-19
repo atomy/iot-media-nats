@@ -24,8 +24,10 @@ NEEDS_TAG=`git describe --contains $GIT_COMMIT 2>/dev/null`
 # only tag if no tag already
 if [ -z "$NEEDS_TAG" ]; then
     git tag $NEW_TAG
+    git remote remove tagstream || true
+    git add tagstream git@github.com:atomy/iot-media-api.git
     echo "[auto-tag] Tagged with $NEW_TAG"
-    git push --tags
+    git push tagstream --tags
 else
     echo "[auto-tag] Already a tag on this commit"
 fi
