@@ -10,3 +10,4 @@ docker-compose.prod.yml
 /vendor/
 .phpunit.result.cache
 current_version
+current_live_version
