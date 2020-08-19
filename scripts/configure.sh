@@ -21,19 +21,19 @@ if [ -z "${NATS_HOST}" ] ; then
 fi
 
 cp scripts/deploy.sh.dist scripts/deploy.sh
-sed -i "s/app@1.1.1.1/${DEPLOY_LOGIN}/" scripts/deploy.sh
-sed -i "s/stuff.prod.google.com/${DEPLOY_HOST}/" scripts/deploy.sh
+sed -i "s|app@1.1.1.1|${DEPLOY_LOGIN}|" scripts/deploy.sh
+sed -i "s|stuff.prod.google.com|${DEPLOY_HOST}|" scripts/deploy.sh
 
 cp scripts/build.sh.dist scripts/build.sh
-sed -i "s/xxxx.dkr.ecr.eu-central-1.amazonaws.com/${ECR_PREFIX}/" scripts/build.sh
+sed -i "s|xxxx.dkr.ecr.eu-central-1.amazonaws.com|${ECR_PREFIX}|" scripts/build.sh
 
 cp scripts/push.sh.dist scripts/push.sh
-sed -i "s/xxxx.dkr.ecr.eu-central-1.amazonaws.com/${ECR_PREFIX}/" scripts/push.sh
+sed -i "s|xxxx.dkr.ecr.eu-central-1.amazonaws.com|${ECR_PREFIX}|" scripts/push.sh
 
 cp docker-compose.prod.dist docker-compose.prod.yml
-sed -i "s/xxxx.dkr.ecr.eu-central-1.amazonaws.com/${ECR_PREFIX}/" docker-compose.prod.yml
-sed -i "s/stuff.prod.google.com/${DEPLOY_HOST}/" docker-compose.prod.yml
-sed -i "s/nats.prod.google.com/${NATS_HOST}/" docker-compose.prod.yml
+sed -i "s|xxxx.dkr.ecr.eu-central-1.amazonaws.com|${ECR_PREFIX}|" docker-compose.prod.yml
+sed -i "s|stuff.prod.google.com|${DEPLOY_HOST}|" docker-compose.prod.yml
+sed -i "s|nats.prod.google.com|${NATS_HOST}|" docker-compose.prod.yml
 
 cp docker-compose.yml.dist docker-compose.yml
-sed -i "s/xxxx.dkr.ecr.eu-central-1.amazonaws.com/${ECR_PREFIX}/" docker-compose.yml
+sed -i "s|xxxx.dkr.ecr.eu-central-1.amazonaws.com|${ECR_PREFIX}|" docker-compose.yml
