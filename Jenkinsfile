@@ -49,7 +49,11 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh './scripts/save-current-live-version.sh'
+                withCredentials([string(credentialsId: 'iot-media-api-meta-url', variable: 'APP_META_URL')]) {
+                        echo 'Saving current live version...'
+                        sh './scripts/save-current-live-version.sh'
+                        echo 'Saving current live version...DONE'
+                }
 
                 echo 'Deploying....'
                 sshagent(credentials : ['deploy-key-docker02']) {
@@ -57,8 +61,7 @@ pipeline {
                 }
                 echo 'Deploying....DONE'
 
-                withCredentials([string(credentialsId: 'discord-webhook-release-url', variable: 'DISCORD_WEBHOOK_URL'),
-                    string(credentialsId: 'iot-media-api-meta-url', variable: 'APP_META_URL')]) {
+                withCredentials([string(credentialsId: 'discord-webhook-release-url', variable: 'DISCORD_WEBHOOK_URL')]) {
                         echo 'Sending release-notification...'
                         sh './scripts/notification.sh'
                         echo 'Sending release-notification...DONE'
