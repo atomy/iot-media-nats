@@ -25,7 +25,6 @@ pipeline {
                     echo 'Auto-tagging...'
                     sh './scripts/auto-tag.sh'
                     echo 'Auto-tagging...DONE'
-                    //sh 'ssh -o StrictHostKeyChecking=no -l cloudbees 192.168.1.106 uname -a'
                 }
 
                 echo 'Building...'
@@ -56,7 +55,8 @@ pipeline {
                 }
                 echo 'Deploying....DONE'
 
-                withCredentials([string(credentialsId: 'discord-webhook-release-url', variable: 'DISCORD_WEBHOOK_URL')]) {
+                withCredentials([string(credentialsId: 'discord-webhook-release-url', variable: 'DISCORD_WEBHOOK_URL'),
+                    string(credentialsId: 'iot-media-api-meta-url', variable: 'APP_META_URL')]) {
                         echo 'Sending release-notification...'
                         sh './scripts/notification.sh'
                         echo 'Sending release-notification...DONE'
