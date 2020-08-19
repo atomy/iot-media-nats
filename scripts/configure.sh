@@ -50,3 +50,5 @@ sed -i "s|xxxx.dkr.ecr.eu-central-1.amazonaws.com|${ECR_PREFIX}|" docker-compose
 
 cp ${SSH_PRIV} ./scripts/docker/php/id_rsa
 cp ${SSH_PUB} ./scripts/docker/php/id_rsa.pub
+
+cp scripts/docker/nats/nats.conf scripts/docker/nats/nats.conf.dist
