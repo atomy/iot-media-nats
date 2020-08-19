@@ -17,6 +17,10 @@ pipeline {
                 echo 'Configuring...DONE'
               }
 
+                echo 'Auto-tagging...'
+                sh './scripts/auto-tag.sh'
+                echo 'Auto-tagging...DONE'
+
                 echo 'Building...'
                 sh './scripts/build.sh'
                 echo 'Building...DONE'

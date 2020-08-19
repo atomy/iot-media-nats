@@ -20,6 +20,8 @@ services:
       - "traefik.backend=iot-media-api-prod"
       - "traefik.frontend.rule=Host:stuff.prod.google.com"
       - "traefik.docker.network=web"
+    networks:
+      - "web"
 
 volumes:
   php-sock:
