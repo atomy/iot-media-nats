@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 if [ -z "${DEPLOY_LOGIN}" ] ; then
   echo "ENV: DEPLOY_LOGIN is missing!"
   exit 1
@@ -51,8 +53,15 @@ sed -i "s|xxxx.dkr.ecr.eu-central-1.amazonaws.com|${ECR_PREFIX}|" docker-compose
 echo "before (${SSH_PUB}):"
 ls -al scripts/docker/php/
 
-cp ${SSH_PRIV} scripts/docker/php/id_rsa
-cp ${SSH_PUB} scripts/docker/php/id_rsa.pub
+if [[ ! -f "scripts/docker/php/id_rsa" ]]
+then
+  cp ${SSH_PRIV} scripts/docker/php/id_rsa
+fi
+
+if [[ ! -f "scripts/docker/php/id_rsa.pub" ]]
+then
+  cp ${SSH_PUB} scripts/docker/php/id_rsa.pub
+fi
 
 echo "after:"
 ls -al scripts/docker/php/
