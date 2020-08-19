@@ -47,13 +47,13 @@ class EventController
         } catch (\Exception $exception) {
             $this->container->getLogger()->error($exception);
             $response = $response->withStatus(500);
-            $response->getBody()->write(json_encode(['error' => ['message' => $exception->getMessage()]], JSON_THROW_ON_ERROR, 512));
+            $response->getBody()->write(json_encode(['error' => [['message' => $exception->getMessage()]]], JSON_THROW_ON_ERROR, 512));
             return $response;
         }
 
         $this->container->getLogger()->info('done');
 
-        $response->getBody()->write(json_encode(['message' => 'Message queued'], JSON_THROW_ON_ERROR, 512));
+        $response->getBody()->write(json_encode(['message' => 'Message published'], JSON_THROW_ON_ERROR, 512));
         return $response->withStatus(200);
     }
 }

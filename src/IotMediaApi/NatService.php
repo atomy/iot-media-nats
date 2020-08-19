@@ -40,9 +40,16 @@ class NatService
     {
         $connectionOptions = new \Nats\ConnectionOptions();
         $connectionOptions->setHost(EnvHelper::get('NATS_HOST'))->setPort((int) EnvHelper::get('NATS_PORT'));
+        $connectionOptions->setUser(EnvHelper::get('NATS_USER'))->setPass(EnvHelper::get('NATS_PASSWORD'));
 
         // connect and publish message
         $connection = new \Nats\Connection($connectionOptions);
+        $this->container->getLogger()->info(sprintf(
+            "Connecting to NATS-backend on host: '%s:%d' (using username: '%s')",
+            $connectionOptions->getHost(),
+            (int) $connectionOptions->getPort(),
+            $connectionOptions->getUser()
+        ));
         $connection->connect();
         $connection->publish('iot.meta', json_encode($data, JSON_THROW_ON_ERROR, 512));
 

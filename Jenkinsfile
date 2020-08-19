@@ -14,6 +14,8 @@ pipeline {
                     string(credentialsId: 'iot-media-api-deploy-login', variable: 'DEPLOY_LOGIN'),
                     string(credentialsId: 'iot-media-api-ecr-prefix', variable: 'ECR_PREFIX'),
                     string(credentialsId: 'iot-media-api-nats-host', variable: 'NATS_HOST'),
+                    string(credentialsId: 'iot-media-api-nats-user', variable: 'NATS_USER'),
+                    string(credentialsId: 'iot-media-api-nats-password', variable: 'NATS_PASSWORD'),
                     file(credentialsId: 'iot-media-api-ssh-priv', variable: 'SSH_PRIV'),
                     file(credentialsId: 'iot-media-api-ssh-pub', variable: 'SSH_PUB')]) {
                         echo 'Configuring...'

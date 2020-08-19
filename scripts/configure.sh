@@ -22,6 +22,16 @@ if [ -z "${NATS_HOST}" ] ; then
   exit 1
 fi
 
+if [ -z "${NATS_USER}" ] ; then
+  echo "ENV: NATS_USER is missing!"
+  exit 1
+fi
+
+if [ -z "${NATS_PASSWORD}" ] ; then
+  echo "ENV: NATS_PASSWORD is missing!"
+  exit 1
+fi
+
 if [ -z "${SSH_PUB}" ] ; then
   echo "FILE: SSH_PUB is missing!"
   exit 1
@@ -46,6 +56,8 @@ cp docker-compose.prod.dist docker-compose.prod.yml
 sed -i "s|xxxx.dkr.ecr.eu-central-1.amazonaws.com|${ECR_PREFIX}|" docker-compose.prod.yml
 sed -i "s|stuff.prod.google.com|${DEPLOY_HOST}|" docker-compose.prod.yml
 sed -i "s|nats.prod.google.com|${NATS_HOST}|" docker-compose.prod.yml
+sed -i "s|natsuser|${NATS_USER}|" docker-compose.prod.yml
+sed -i "s|natspassword|${NATS_PASSWORD}|" docker-compose.prod.yml
 
 cp docker-compose.yml.dist docker-compose.yml
 sed -i "s|xxxx.dkr.ecr.eu-central-1.amazonaws.com|${ECR_PREFIX}|" docker-compose.yml

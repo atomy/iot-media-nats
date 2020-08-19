@@ -9,6 +9,8 @@ services:
     environment:
       - NATS_HOST=iot-media-api-nats
       - NATS_PORT=4222
+      - NATS_USER=natsuser
+      - NATS_PASSWORD=natspass
 
   iot-media-api-nginx:
     image: xxxx.dkr.ecr.eu-central-1.amazonaws.com/atomy/iot-media-api-nginx:latest
