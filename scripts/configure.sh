@@ -50,9 +50,6 @@ sed -i "s|nats.prod.google.com|${NATS_HOST}|" docker-compose.prod.yml
 cp docker-compose.yml.dist docker-compose.yml
 sed -i "s|xxxx.dkr.ecr.eu-central-1.amazonaws.com|${ECR_PREFIX}|" docker-compose.yml
 
-echo "before (${SSH_PUB}):"
-ls -al scripts/docker/php/
-
 if [[ ! -f "scripts/docker/php/id_rsa" ]]
 then
   cp ${SSH_PRIV} scripts/docker/php/id_rsa
@@ -62,8 +59,5 @@ if [[ ! -f "scripts/docker/php/id_rsa.pub" ]]
 then
   cp ${SSH_PUB} scripts/docker/php/id_rsa.pub
 fi
-
-echo "after:"
-ls -al scripts/docker/php/
 
 cp scripts/docker/nats/nats.conf.dist scripts/docker/nats/nats.conf

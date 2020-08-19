@@ -6,25 +6,28 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-              withCredentials([string(credentialsId: 'iot-media-api-deploy-host', variable: 'DEPLOY_HOST'),
-                string(credentialsId: 'iot-media-api-deploy-login', variable: 'DEPLOY_LOGIN'),
-                string(credentialsId: 'iot-media-api-ecr-prefix', variable: 'ECR_PREFIX'),
-                string(credentialsId: 'iot-media-api-nats-host', variable: 'NATS_HOST'),
-                file(credentialsId: 'iot-media-api-ssh-priv', variable: 'SSH_PRIV'),
-                file(credentialsId: 'iot-media-api-ssh-pub', variable: 'SSH_PUB')]) {
-                echo 'Configuring...'
-                sh './scripts/configure.sh'
-                echo 'Configuring...DONE'
-              }
+                withCredentials([string(credentialsId: 'iot-media-api-deploy-host', variable: 'DEPLOY_HOST'),
+                    string(credentialsId: 'iot-media-api-deploy-login', variable: 'DEPLOY_LOGIN'),
+                    string(credentialsId: 'iot-media-api-ecr-prefix', variable: 'ECR_PREFIX'),
+                    string(credentialsId: 'iot-media-api-nats-host', variable: 'NATS_HOST'),
+                    file(credentialsId: 'iot-media-api-ssh-priv', variable: 'SSH_PRIV'),
+                    file(credentialsId: 'iot-media-api-ssh-pub', variable: 'SSH_PUB')]) {
+                        echo 'Configuring...'
+                        sh './scripts/configure.sh'
+                        echo 'Configuring...DONE'
+                }
+            }
 
+            sshagent (credentials: ['github-iogames-jenkins']) {
                 echo 'Auto-tagging...'
                 sh './scripts/auto-tag.sh'
                 echo 'Auto-tagging...DONE'
-
-                echo 'Building...'
-                sh './scripts/build.sh'
-                echo 'Building...DONE'
+                //sh 'ssh -o StrictHostKeyChecking=no -l cloudbees 192.168.1.106 uname -a'
             }
+
+            echo 'Building...'
+            sh './scripts/build.sh'
+            echo 'Building...DONE'
         }
 
         stage('Push ECR') {
