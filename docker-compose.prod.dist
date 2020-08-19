@@ -4,7 +4,6 @@ services:
   iot-media-api-php:
     image: xxxx.dkr.ecr.eu-central-1.amazonaws.com/atomy/iot-media-api-php:latest
     volumes:
-      - .:/var/www/
       - php-sock:/sock
     environment:
       - NATS_HOST=nats.prod.google.com
@@ -13,8 +12,6 @@ services:
   iot-media-api-nginx:
     image: xxxx.dkr.ecr.eu-central-1.amazonaws.com/atomy/iot-media-api-nginx:latest
     volumes:
-      - .:/var/www/
-      - ./scripts/docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
       - php-sock:/sock
     depends_on:
       - iot-media-api-php
