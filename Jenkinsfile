@@ -3,6 +3,10 @@ pipeline {
         label 'default'
     }
 
+    environment {
+        APP_NAME = 'iot-media-api'
+    }
+
     stages {
         stage('Build') {
             steps {
@@ -51,9 +55,13 @@ pipeline {
                     sh './scripts/deploy.sh'
                 }
                 echo 'Deploying....DONE'
+
+                withCredentials([string(credentialsId: 'discord-webhook-release-url', variable: 'DISCORD_WEBHOOK_URL')]) {
+                        echo 'Sending release-notification...'
+                        sh './scripts/notification.sh'
+                        echo 'Sending release-notification...DONE'
+                }
             }
         }
     }
 }
-
-

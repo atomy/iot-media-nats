@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-#set -e
-set -x
-
 #get highest tag number
 VERSION=`git describe --abbrev=0 --tags`
 
@@ -28,6 +25,7 @@ NEEDS_TAG=`git describe --contains $GIT_COMMIT 2>/dev/null`
 if [ -z "$NEEDS_TAG" ]; then
     git tag $NEW_TAG
     echo "[auto-tag] Tagged with $NEW_TAG"
+    git remote set-url origin git@github.com:atomy/iot-media-api.git
     git push --tags
 else
     echo "[auto-tag] Already a tag on this commit"
