@@ -13,7 +13,12 @@ return function (App $app) {
     });
 
     $app->get('/health', function (Request $request, Response $response) use ($app) {
-        $response = (new \IotMediaApi\Controller\HealthController($app->getContainer()->get(\App\Container::class)))->get($request, $response, []);
+        $response = (new \IotMediaApi\Controller\HealthController($app->getContainer()->get(\App\Container::class)))->getHealth($request, $response, []);
+        return $response->withHeader('Content-Type', 'application/json');
+    });
+
+    $app->get('/ready', function (Request $request, Response $response) use ($app) {
+        $response = (new \IotMediaApi\Controller\HealthController($app->getContainer()->get(\App\Container::class)))->getReady($request, $response, []);
         return $response->withHeader('Content-Type', 'application/json');
     });
 

@@ -6,6 +6,7 @@ namespace IotMediaApi;
 
 use App\Container;
 use App\EnvHelper;
+use Nats\ConnectionOptions;
 
 /**
  * Class IotMediaApp.
@@ -38,9 +39,7 @@ class NatService
      */
     public function sendEvent(array $data): void
     {
-        $connectionOptions = new \Nats\ConnectionOptions();
-        $connectionOptions->setHost(EnvHelper::get('NATS_HOST'))->setPort((int) EnvHelper::get('NATS_PORT'));
-        $connectionOptions->setUser(EnvHelper::get('NATS_USER'))->setPass(EnvHelper::get('NATS_PASSWORD'));
+        $connectionOptions = $this->getConnectionOptions();
 
         // connect and publish message
         $connection = new \Nats\Connection($connectionOptions);
@@ -58,5 +57,38 @@ class NatService
         } catch (\Exception $e) {
             throw new \RuntimeException('failed to close connection!');
         }
+    }
+
+    /**
+     * Check if NATS-backend is reachable.
+     *
+     * @return bool
+     */
+    public function isReachable(): bool
+    {
+        $connectionOptions = $this->getConnectionOptions();
+        $connection = new \Nats\Connection($connectionOptions);
+
+        try {
+            $connection->connect();
+        } catch (\Exception $exception) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Build and return connection-options.
+     *
+     * @return \Nats\ConnectionOptions
+     */
+    protected function getConnectionOptions(): ConnectionOptions
+    {
+        $connectionOptions = new \Nats\ConnectionOptions();
+        $connectionOptions->setHost(EnvHelper::get('NATS_HOST'))->setPort((int) EnvHelper::get('NATS_PORT'));
+        $connectionOptions->setUser(EnvHelper::get('NATS_USER'))->setPass(EnvHelper::get('NATS_PASSWORD'));
+
+        return $connectionOptions;
     }
 }
