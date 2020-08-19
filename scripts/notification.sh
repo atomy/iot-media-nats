@@ -26,9 +26,9 @@ then
     ${DISCORD_WEBHOOK_URL}
 else
   CHANGES=`git log --pretty=format:%B ${CURRENT_VERSION}..${NEW_VERSION} | sort | uniq`
-  CHANGES=`echo ${CHANGES} | sed ':a;N;$!ba;s/\n/\\n/g'`
+  CHANGES=`echo ${CHANGES} | sed ':a;N;$!ba;s/\n/\\\n/g'`
 
-  curl -X POST \
+  echo curl -X POST \
     -H "Content-Type: application/json" \
     -d "{\"username\": \"Jenkins-Release\", \"content\": \"Released **${APP_NAME}** -- **${CURRENT_VERSION}** -> **${NEW_VERSION}**\n${CHANGES}\"}" \
     ${DISCORD_WEBHOOK_URL}
