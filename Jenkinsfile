@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'coco'
+        label 'default'
     }
 
     stages {
