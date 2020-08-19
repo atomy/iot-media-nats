@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+set -e
+set -x
+
 #get highest tag number
 VERSION=`git describe --abbrev=0 --tags`
 
@@ -25,7 +28,7 @@ NEEDS_TAG=`git describe --contains $GIT_COMMIT 2>/dev/null`
 if [ -z "$NEEDS_TAG" ]; then
     git tag $NEW_TAG
     git remote remove tagstream || true
-    git add tagstream git@github.com:atomy/iot-media-api.git
+    git remote add tagstream git@github.com:atomy/iot-media-api.git
     echo "[auto-tag] Tagged with $NEW_TAG"
     git push tagstream --tags
 else
