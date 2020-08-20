@@ -42,6 +42,13 @@ if [ -z "${SSH_PRIV}" ] ; then
   exit 1
 fi
 
+rm -f scripts/deploy.sh
+rm -f scripts/build.sh
+rm -f scripts/push.sh
+rm -f docker-compose.prod.yml
+rm -f docker-compose.yml
+rm -f scripts/docker/nats/nats.conf
+
 cp scripts/deploy.sh.dist scripts/deploy.sh
 sed -i "s|app@1.1.1.1|${DEPLOY_LOGIN}|" scripts/deploy.sh
 sed -i "s|stuff.prod.google.com|${DEPLOY_HOST}|" scripts/deploy.sh
