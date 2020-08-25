@@ -50,7 +50,7 @@ class NatService
             $connectionOptions->getUser()
         ));
         $connection->connect();
-        $connection->publish('iot.meta', json_encode($data, JSON_THROW_ON_ERROR, 512));
+        $connection->publish('iot.incomming', json_encode($data, JSON_THROW_ON_ERROR, 512));
 
         try {
             $connection->close();

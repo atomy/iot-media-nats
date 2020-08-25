@@ -18,7 +18,7 @@ $connection->connect();
 
 // Publish
 $connection->subscribe(
-    'iot.meta',
+    'iot.incomming',
     function ($message) {
         printf("Data: %s\r\n", $message->getBody());
     }
