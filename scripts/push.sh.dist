@@ -2,4 +2,4 @@
 
 set -e
 
-docker push xxx.dkr.ecr.eu-central-1.amazonaws.com/atomy/iot-media-nats-backend:latest
+docker push xxx.dkr.ecr.eu-central-1.amazonaws.com/atomy/iot-media-nats:latest
