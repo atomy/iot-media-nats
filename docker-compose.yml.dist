@@ -1,0 +1,7 @@
+version: "2.3"
+
+services:
+  iot-media-nats-backend:
+    image: xxx.dkr.ecr.eu-central-1.amazonaws.com/atomy/iot-media-nats-backend:latest
+    ports:
+      - "4222:4222"

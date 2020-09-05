@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -e
+
+docker run --rm -v $(pwd):/proj -eUID=`id -u` -eGID=`id -g` busybox sh -c 'chown -R ${UID}:${GID} /proj'
+
+docker build -f scripts/docker/nats/Dockerfile -t atomy/iot-media-nats-backend .
+docker tag atomy/iot-media-nats-backend:latest xxx.dkr.ecr.eu-central-1.amazonaws.com/atomy/iot-media-nats-backend:latest
+
