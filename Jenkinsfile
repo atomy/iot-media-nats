@@ -11,9 +11,7 @@ pipeline {
         stage('Build') {
             steps {
                 withCredentials([string(credentialsId: 'iot-media-nats-ecr-prefix', variable: 'ECR_PREFIX'),
-                    string(credentialsId: 'iot-media-nats-deploy-login', variable: 'DEPLOY_LOGIN'),
-                    file(credentialsId: 'iot-media-nats-ssh-priv', variable: 'SSH_PRIV'),
-                    file(credentialsId: 'iot-media-nats-ssh-pub', variable: 'SSH_PUB')]) {
+                    string(credentialsId: 'iot-media-nats-deploy-login', variable: 'DEPLOY_LOGIN')]) {
                         echo 'Configuring...'
                         sh './scripts/configure.sh'
                         echo 'Configuring...DONE'
