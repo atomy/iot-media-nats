@@ -9,7 +9,7 @@ then
   exit 1
 fi
 
-scp ~/.docker/config.json app@1.1.1.1:~/.docker/config.json
-scp docker-compose.prod.yml app@1.1.1.1:/home/pi/apps/nats/docker-compose.yml
+scp -o StrictHostKeyChecking=no ~/.docker/config.json app@1.1.1.1:~/.docker/config.json
+scp -o StrictHostKeyChecking=no docker-compose.prod.yml app@1.1.1.1:/home/pi/apps/nats/docker-compose.yml
 
 ssh -o StrictHostKeyChecking=no app@1.1.1.1 "cd /home/app/apps/nats && docker-compose pull && docker-compose up -d"
